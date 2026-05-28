@@ -4,26 +4,29 @@ import NavIcon from '/public/images/pokedex.png';
 import Image from 'next/image';
 
 export default function Navbar() {
-      
     return (
-        <header>
-            <nav className="border-b bg-red-400 border-b-zinc-600 px-5 py-2">
-                <div className="container m-auto flex justify-between">
-                    <h1 className="text-3xl">
-                        <Link href="/">
-                            <Image 
+        <header className="sticky top-0 z-40">
+            <nav className="bg-red-700 border-b-4 border-red-900 shadow-xl">
+                <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+                    <Link href="/" className="flex items-center gap-3 group">
+                        <div className="bg-white rounded-full p-1.5 shadow-md group-hover:scale-105 transition-transform">
+                            <Image
                                 src={NavIcon.src}
-                                alt='/'
-                                width="32"
-                                height="32"
-                                className='max-w-8'
+                                alt='Pokédex'
+                                width="28"
+                                height="28"
+                                className='max-w-7'
                             />
-                        </Link>
-                    </h1>
-                    <ul className='flex gap-2 items-center text-white font-bold'>
-                        <li className='list-none'>
-                        </li>
-                    </ul>
+                        </div>
+                        <span className="text-white font-black text-xl tracking-widest uppercase hidden sm:block drop-shadow">
+                            Pokédex
+                        </span>
+                    </Link>
+                    <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-blue-400 border-2 border-blue-200 shadow-sm"></div>
+                        <div className="w-3 h-3 rounded-full bg-yellow-300 border-2 border-yellow-100 shadow-sm"></div>
+                        <div className="w-3 h-3 rounded-full bg-green-400 border-2 border-green-200 shadow-sm"></div>
+                    </div>
                 </div>
             </nav>
         </header>

@@ -1,8 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        loader: 'default',
-        domains: ['images.pokemontcg.io', 'raw.githubusercontent.com'], // Agrega el dominio de tu host aquí
-      },
+        remotePatterns: [
+            { protocol: 'https', hostname: 'images.pokemontcg.io' },
+            { protocol: 'https', hostname: 'images.scrydex.com' },
+            { protocol: 'https', hostname: 'raw.githubusercontent.com' },
+        ],
+    },
 };
 export default nextConfig;

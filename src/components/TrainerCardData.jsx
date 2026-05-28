@@ -1,66 +1,67 @@
 import i18n from '@/utils/i18n.js'
 
+function DataCell({ label, value }) {
+    return (
+        <div className="bg-slate-800/50 rounded-xl p-3 border border-slate-700">
+            <p className="text-slate-400 text-xs font-mono uppercase tracking-wide mb-1">{label}</p>
+            <span className="text-white text-sm">{value}</span>
+        </div>
+    )
+}
+
 export default function TrainerCardData( { trainer } ) {
-  return (
-    <div className="md:col-span-4 md:px-0 px-4 mb-4">
-        <div className={`bg-neutral-700 max-w-96 grid mx-auto p-4 text-white rounded`} >
-            {/* Descripción */}
-            <nav className="flex justify-between mb-6">
-                <div>
-                    <p className="font-bold text-2xl">{trainer.name}</p>
-                    <span>{trainer.supertype} - </span>
-                    {
-                        trainer.subtypes.map((subtype, index) => (
-                        <span key={index}> 
-                            {subtype}
-                            {index < trainer.subtypes.length - 1 && ', '}
-                        </span> 
+    return (
+        <div className="space-y-4">
+
+            {/* Name + Type */}
+            <div className="bg-neutral-700 rounded-2xl p-5 shadow-lg border border-neutral-600">
+                <p className="text-neutral-400 text-xs font-mono uppercase tracking-widest mb-1">
+                    {trainer.supertype}
+                    {trainer.subtypes.map((s, i) => (
+                        <span key={i}> — {s}</span>
+                    ))}
+                </p>
+                <p className="text-white font-black text-2xl">{trainer.name}</p>
+            </div>
+
+            {/* Rules */}
+            {trainer.rules && (
+                <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
+                    <h4 className="text-slate-400 text-xs font-mono uppercase tracking-widest mb-3">
+                        {i18n.t('cardRule')}
+                    </h4>
+                    {trainer.rules.map((rule, index) => (
+                        <p key={index} className="text-slate-300 text-sm leading-relaxed mb-2 last:mb-0">
+                            {rule}
+                        </p>
                     ))}
                 </div>
-            </nav>
-            {/* Reglas */}
-            {trainer.rules &&
-                <section  className='mb-4'>
-                    {i18n.t('cardRule')}:
-                    { trainer.rules && 
-                        trainer.rules.map((rule, index) => (
-                            <p className='text-xs mb-2' key={index}>
-                                {rule}
-                            </p>
-                        ))
-                    }
-                    <hr />
-                </section>
-            }
-            {/* otra Informacion */}
-            <section className='mb-4 grid grid-cols-3'>
-                <div>
-                    <p className='uppercase text-sm font-bold mb-2'>{i18n.t('cardArtist')}:</p>
-                    <span className='text-sm'>{trainer.artist}</span>
-                </div>
-                <div>
-                    <p className='uppercase text-sm font-bold mb-2'>{i18n.t('cardRarity')}:</p>
-                    <span className='text-sm'>{trainer.rarity}</span>
-                </div>
-                <div>
-                    <p className='uppercase text-sm font-bold mb-2'>{i18n.t('cardExpansion')}:</p>
-                    <span className='text-sm'>{trainer.set.name}</span>
-                </div>
-            </section>
-            {/* Numero y Regulacion */}
-            <section className='mb-4 grid grid-cols-3'>
-                <div>
-                    <p className='uppercase text-sm font-bold mb-2'>{i18n.t('cardNumber')}:</p>
-                    <span className='text-sm'>{trainer.number}/{trainer.set.printedTotal}</span>
-                </div>
-                {trainer.regulationMark &&
-                    <div>
-                        <p className='uppercase text-sm font-bold mb-2'>{i18n.t('cardRotation')}:</p>
-                        <span className='uppercase text-sm bg-slate-800 rounded-full w-5  block text-center'>{trainer.regulationMark}</span>
+            )}
+
+            {/* Meta Info */}
+            <div className="grid grid-cols-3 gap-3">
+                <DataCell label={i18n.t('cardArtist')}    value={trainer.artist} />
+                <DataCell label={i18n.t('cardRarity')}    value={trainer.rarity} />
+                <DataCell label={i18n.t('cardExpansion')} value={trainer.set.name} />
+            </div>
+
+            {/* Number + Regulation */}
+            <div className="grid grid-cols-3 gap-3">
+                <DataCell
+                    label={i18n.t('cardNumber')}
+                    value={`${trainer.number} / ${trainer.set.printedTotal}`}
+                />
+                {trainer.regulationMark && (
+                    <div className="bg-slate-800/50 rounded-xl p-3 border border-slate-700">
+                        <p className="text-slate-400 text-xs font-mono uppercase tracking-wide mb-1">
+                            {i18n.t('cardRotation')}
+                        </p>
+                        <span className="inline-flex w-7 h-7 items-center justify-center bg-slate-900 rounded-full text-white text-sm font-bold uppercase border border-slate-600">
+                            {trainer.regulationMark}
+                        </span>
                     </div>
-                }
-            </section>
+                )}
+            </div>
         </div>
-    </div>
-  )
+    )
 }
